@@ -4,6 +4,10 @@ import sys
 from fastapi import FastAPI
 from loguru import logger
 
+from src.common.database.client import DatabaseClient
+
+from .repositories.user import UsersRepository
+from .routes.auth import add_auth_routes
 from .routes.index import add_index_routes
 from .settings import Settings
 
@@ -19,15 +23,28 @@ def build_settings() -> Settings:
     return settings
 
 
-def build_fastapi_app(settings: Settings) -> FastAPI:
+def build_database_client() -> DatabaseClient:
+    """
+    Constroi o client para o banco de dados.
+    """
+
+    return DatabaseClient()
+
+
+def build_fastapi_app(
+    settings: Settings, database_client: DatabaseClient
+) -> FastAPI:
     """
     Constroi o objeto FastAPI.
     """
 
     # Construa o objeto FastAPI
     app = FastAPI()
+    # Construa os objetos para repositórios
+    users_repo = UsersRepository(database_client)
     # Adicione as rotas
     add_index_routes(app, settings)
+    add_auth_routes(app, settings, users_repo)
     # Retorne o objeto FastAPI
     return app
 

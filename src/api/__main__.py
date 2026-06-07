@@ -3,12 +3,18 @@
 import uvicorn
 from loguru import logger
 
-from .bootstrap import build_fastapi_app, build_settings, configure_log
+from .bootstrap import (
+    build_database_client,
+    build_fastapi_app,
+    build_settings,
+    configure_log,
+)
 
 # Objetos globais
 
 settings = build_settings()
-app = build_fastapi_app(settings)
+database_client = build_database_client()
+app = build_fastapi_app(settings, database_client)
 
 # Funções
 

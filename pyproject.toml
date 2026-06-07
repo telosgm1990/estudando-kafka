@@ -2,10 +2,7 @@
 name = "estudando-kafka"
 version = "1.0"
 requires-python = ">=3.14"
-dependencies = [
-    "fastapi[standard]",
-    "loguru"
-]
+dependencies = ["fastapi[standard]", "argon2-cffi", "loguru"]
 
 [project.optional-dependencies]
 dev = [
@@ -15,7 +12,7 @@ dev = [
     "pylint",
     "pytest",
     "pytest-cov",
-    "pytest-sugar"
+    "pytest-sugar",
 ]
 
 
