@@ -12,7 +12,7 @@ from src.api.schemas.auth import (
     LoginResponseData,
     LoginResponseBody,
 )
-from src.api.settings import Settings
+from src.common.settings import Settings
 
 # Funções
 
@@ -46,8 +46,6 @@ def add_auth_routes(
         # Monte a resposta
         return RegisterUserResponseBody(message="user registered successfully")
 
-
-
     @app.post("/auth/login", status_code=HTTPStatus.CREATED)
     def login(request_body: RegisterUserRequestBody) -> LoginResponseBody:
         """
@@ -71,5 +69,3 @@ def add_auth_routes(
 
         # Monte a resposta
         return LoginResponseBody(data=LoginResponseData(token=new_token))
-
-    

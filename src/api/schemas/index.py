@@ -1,6 +1,6 @@
 # Imports
 
-from .base import ApiMessageResponse
+from src.api.schemas.base import ApiMessageResponse
 
 # Classes
 

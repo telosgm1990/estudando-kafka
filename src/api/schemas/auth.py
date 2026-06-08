@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel as PydanticBaseModel
 
-from .base import ApiDataResponse, ApiMessageResponse
+from src.api.schemas.base import ApiDataResponse, ApiMessageResponse
 
 # Classes
 

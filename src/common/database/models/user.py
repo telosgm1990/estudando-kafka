@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from .base import DatabaseModel
+from src.common.database.models.base import DatabaseModel
 
 # Classes
 

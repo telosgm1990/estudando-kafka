@@ -1,13 +1,14 @@
 # Imports
 
 import json
+from pathlib import Path
 from typing import Final
 from uuid import uuid4
 
-from src.common.settings import DATA_PATH
+from src.common.settings import Settings
 
-from .models.base import DatabaseModel
-from .models.user import UserModel
+from src.common.database.models.base import DatabaseModel
+from src.common.database.models.user import UserModel
 
 # Constantes
 
@@ -23,8 +24,10 @@ class DatabaseClient:
     Cliente para o banco de dados.
     """
 
-    def __init__(self) -> None:
-        pass
+    _data_directory_path: Path
+
+    def __init__(self, settings: Settings) -> None:
+        self._data_directory_path = settings.data_directory_path
 
     def get_entries_from(self, table_name: str) -> dict[str, DatabaseModel]:
         """
@@ -61,8 +64,7 @@ class DatabaseClient:
         self._set_entries_into(table_name, entries)
 
     def _get_entries_from(self, table_name: str) -> dict[str, DatabaseModel]:
-        file_name = f"{table_name}.json"
-        file_path = DATA_PATH.joinpath(file_name)
+        file_path = self._get_table_file_path(table_name)
         if not file_path.exists():
             return dict()
 
@@ -83,8 +85,7 @@ class DatabaseClient:
         entries_dict = {
             entry_key: entry.to_json() for entry_key, entry in entries.items()
         }
-        file_name = f"{table_name}.json"
-        file_path = DATA_PATH.joinpath(file_name)
+        file_path = self._get_table_file_path(table_name)
 
         with open(file_path, "w") as file:
             file.write(json.dumps(entries_dict, indent=4))
@@ -99,3 +100,7 @@ class DatabaseClient:
             new_entry_key = str(uuid4())
 
         return new_entry_key
+
+    def _get_table_file_path(self, table_name: str) -> Path:
+        file_name = f"{table_name}.json"
+        return self._data_directory_path.joinpath(file_name)

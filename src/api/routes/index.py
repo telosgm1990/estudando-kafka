@@ -2,8 +2,8 @@
 
 from fastapi import FastAPI
 
-from ..schemas.index import HealthcheckResponse, HelloResponse
-from ..settings import Settings
+from src.api.schemas.index import HealthcheckResponse, HelloResponse
+from src.common.settings import Settings
 
 # Funções
 

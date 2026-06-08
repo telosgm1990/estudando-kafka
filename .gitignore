@@ -3,6 +3,9 @@
 .data
 .logs
 
+*.env*
+!.env.example
+
 # Python
 
 *egg-info
